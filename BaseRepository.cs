@@ -9,8 +9,6 @@ namespace DAL.Repository
 {
     public class BaseRepository<T> where T : class 
     {
-       
-
         public virtual List<T> List()
         {
             var ctx = ETicaretDB.CreateInstance();
