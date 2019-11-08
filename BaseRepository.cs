@@ -5,29 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer
+namespace DAL.Repository
 {
-    public class BaseRepository<T> : Base where T : class
+    public class BaseRepository<T> where T : class 
     {
+       
+
         public virtual List<T> List()
         {
+            var ctx = ETicaretDB.CreateInstance();
             return ctx.Set<T>().ToList();
         }
+
         public virtual void Add(T entity)
         {
+            var ctx = ETicaretDB.CreateInstance();
             ctx.Set<T>().Add(entity);
             ctx.SaveChanges();
         }
+
         public virtual void Update(T entity)
         {
+            var ctx = ETicaretDB.CreateInstance();
             ctx.Set<T>().Attach(entity);
             ctx.Entry(entity).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+
         public virtual void Remove(int entityId)
         {
+            var ctx = ETicaretDB.CreateInstance();
             T Entity = ctx.Set<T>().Find(entityId);
-            
+
             ctx.SaveChanges();
             if (ctx.Entry(Entity).State == EntityState.Detached)
             {
@@ -36,9 +45,11 @@ namespace DataAccessLayer
             ctx.Set<T>().Remove(Entity);
             ctx.SaveChanges();
         }
+
         public virtual T FindById(int EntityId)
         {
+            var ctx = ETicaretDB.CreateInstance();
             return ctx.Set<T>().Find(EntityId);
         }
     }
-}   
+}
